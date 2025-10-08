@@ -1,20 +1,19 @@
 // Import necessary packages
-require('dotenv').config({ path: './Backend/.env' }); // Loads environment variables from .env file
+require('dotenv').config(); // Loads environment variables from .env file for local development
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql2/promise');
+const { Pool } = require('pg'); // Use the pg library for PostgreSQL
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
 // --- DATABASE CONNECTION ---
-const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+// The 'pg' library automatically uses the DATABASE_URL environment variable
+// We also configure SSL for connecting to Render's database
+const db = new Pool({
+    connectionString: process.env.DATABASE_URL,
     ssl: {
-        "rejectUnauthorized": true
+        rejectUnauthorized: false // Required for Render connections
     }
 });
 
@@ -34,7 +33,7 @@ app.post('/api/register', async (req, res) => {
         const { name, email, password } = req.body;
 
         // Check if user already exists
-        const [existingUsers] = await db.query('SELECT id FROM users WHERE email = ?', [email]);
+        const { rows: existingUsers } = await db.query('SELECT id FROM users WHERE email = $1', [email]);
         if (existingUsers.length > 0) {
             return res.status(409).json({ message: 'An account with this email already exists.' });
         }
@@ -44,7 +43,7 @@ app.post('/api/register', async (req, res) => {
 
         // Insert new user (default role is 'member')
         await db.query(
-            'INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)',
+            'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3)',
             [name, email, passwordHash]
         );
 
@@ -67,7 +66,7 @@ app.post('/api/login', async (req, res) => {
         }
 
         // Find user in the database
-        const [users] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const { rows: users } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         const user = users[0];
 
         if (!user) {
@@ -113,7 +112,7 @@ const authenticateToken = (req, res, next) => {
 app.get('/api/players', authenticateToken, async (req, res) => {
     try {
         // For now, we fetch all players. Later you can filter by req.user.userId
-        const [players] = await db.query('SELECT id, name, level, image FROM players');
+        const { rows: players } = await db.query('SELECT id, name, level, image FROM players');
         res.json(players);
     } catch (error) {
         console.error('Fetch players error:', error);
@@ -134,9 +133,9 @@ app.post('/api/players', authenticateToken, async (req, res) => {
         // The user_id of the creator (could be the admin's ID or null)
         const creatorUserId = req.user.userId;
 
-        const [result] = await db.query(
+        const { rows } = await db.query(
             `INSERT INTO players (user_id, name, level, image, description, stats, skills, equipment, equipmentInventory, inventory)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
             [
                 creatorUserId, name, level, image, description,
                 JSON.stringify(stats), JSON.stringify(skills), JSON.stringify(equipment),
@@ -144,7 +143,7 @@ app.post('/api/players', authenticateToken, async (req, res) => {
             ]
         );
 
-        const newPlayerId = result.insertId;
+        const newPlayerId = rows[0].id;
         res.status(201).json({ id: newPlayerId, ...req.body });
 
     } catch (error) {
@@ -157,14 +156,15 @@ app.post('/api/players', authenticateToken, async (req, res) => {
 app.get('/api/players/:id', authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
-        const [players] = await db.query('SELECT * FROM players WHERE id = ?', [id]);
+        const { rows: players } = await db.query('SELECT * FROM players WHERE id = $1', [id]);
         const player = players[0];
 
         if (!player) {
             return res.status(404).json({ message: 'Player not found.' });
         }
 
-        // Parse JSON fields before sending
+        // No need to parse JSON fields, as the 'pg' library can handle them automatically if they are stored as JSONB.
+        // If stored as TEXT, you would still need to parse them. Assuming TEXT for now.
         player.stats = JSON.parse(player.stats || '{}');
         player.skills = JSON.parse(player.skills || '[]');
         player.equipment = JSON.parse(player.equipment || '{}');
@@ -190,10 +190,10 @@ app.put('/api/players/:id', authenticateToken, async (req, res) => {
 
         await db.query(
             `UPDATE players SET 
-                name = ?, level = ?, image = ?, description = ?, 
-                stats = ?, skills = ?, equipment = ?, 
-                equipmentInventory = ?, inventory = ?
-             WHERE id = ?`,
+                name = $1, level = $2, image = $3, description = $4, 
+                stats = $5, skills = $6, equipment = $7, 
+                equipmentInventory = $8, inventory = $9
+             WHERE id = $10`,
             [
                 name, level, image, description,
                 JSON.stringify(stats), JSON.stringify(skills), JSON.stringify(equipment),
@@ -216,7 +216,7 @@ app.put('/api/players/:id', authenticateToken, async (req, res) => {
 // --- MONSTER ENDPOINTS ---
 app.get('/api/monsters', authenticateToken, async (req, res) => {
     try {
-        const [monsters] = await db.query('SELECT * FROM monsters');
+        const { rows: monsters } = await db.query('SELECT * FROM monsters');
         res.json(monsters);
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch monsters.' });
@@ -226,11 +226,11 @@ app.get('/api/monsters', authenticateToken, async (req, res) => {
 app.post('/api/monsters', authenticateToken, async (req, res) => {
     try {
         const { name, image, stats, skills } = req.body;
-        const [result] = await db.query(
-            'INSERT INTO monsters (name, image, stats, skills) VALUES (?, ?, ?, ?)',
+        const { rows } = await db.query(
+            'INSERT INTO monsters (name, image, stats, skills) VALUES ($1, $2, $3, $4) RETURNING id',
             [name, image, JSON.stringify(stats), JSON.stringify(skills)]
         );
-        res.status(201).json({ id: result.insertId, ...req.body });
+        res.status(201).json({ id: rows[0].id, ...req.body });
     } catch (error) {
         res.status(500).json({ message: 'Failed to create monster.' });
     }
@@ -239,7 +239,7 @@ app.post('/api/monsters', authenticateToken, async (req, res) => {
 // --- SKILL ENDPOINTS ---
 app.get('/api/skills', authenticateToken, async (req, res) => {
     try {
-        const [skills] = await db.query('SELECT * FROM skills');
+        const { rows: skills } = await db.query('SELECT * FROM skills');
         res.json(skills);
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch skills.' });
@@ -249,11 +249,11 @@ app.get('/api/skills', authenticateToken, async (req, res) => {
 app.post('/api/skills', authenticateToken, async (req, res) => {
     try {
         const { name, category, type, damage_formula, buff_effect, debuff_effect, description, skill_for } = req.body;
-        const [result] = await db.query(
-            'INSERT INTO skills (name, category, type, damage_formula, buff_effect, debuff_effect, description, skill_for) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        const { rows } = await db.query(
+            'INSERT INTO skills (name, category, type, damage_formula, buff_effect, debuff_effect, description, skill_for) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
             [name, category, type, JSON.stringify(damage_formula), JSON.stringify(buff_effect), JSON.stringify(debuff_effect), description, skill_for]
         );
-        res.status(201).json({ id: result.insertId, ...req.body });
+        res.status(201).json({ id: rows[0].id, ...req.body });
     } catch (error) {
         res.status(500).json({ message: 'Failed to create skill.' });
     }
