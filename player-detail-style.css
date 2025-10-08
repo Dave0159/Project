@@ -1,0 +1,122 @@
+body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f0f2f5; }
+.hidden { display: none !important; }
+
+/* Header */
+.main-header { display: flex; align-items: center; background-color: #fff; padding: 10px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.back-btn { text-decoration: none; color: #007bff; font-weight: bold; margin-right: 20px; }
+h1, h2, h3 { margin: 0 0 15px 0; }
+
+/* Layout Utama */
+.detail-grid { display: grid; grid-template-columns: 300px 1fr; gap: 20px; padding: 20px; }
+
+/* Panel Kiri: Avatar & Equipment */
+.equipment-panel { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.player-avatar { text-align: center; margin-bottom: 20px; }
+#player-image-preview { width: 150px; height: 150px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); object-fit: cover; background-color: #e9ecef; }
+#image-upload { display: none; }
+.upload-btn { display: block; width: 150px; margin: 10px auto 0 auto; padding: 8px; background-color: #6c757d; color: white; border-radius: 5px; cursor: pointer; font-size: 14px; }
+.equipment-slot { min-height: 70px; border: 2px dashed #ccc; border-radius: 5px; margin-bottom: 15px; padding: 10px; color: #aaa; font-weight: bold; position: relative; }
+.equipment-slot .item-name { font-size: 14px; color: #333; }
+.equipment-slot .item-stats { font-size: 12px; color: #007bff; margin-top: 5px; }
+.unequip-btn { position: absolute; top: 5px; right: 5px; background: #dc3545; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px; }
+
+/* Panel Kanan: Info & Inventories */
+.info-panel, .top-info, .bottom-info { display: flex; flex-direction: column; gap: 20px; }
+.description-box, .level-stats-box, .skill-tree, .inventory { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+textarea, input[type="text"], input[type="number"], select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+.level-selector { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+.stats-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.stat-item { display: flex; justify-content: space-between; align-items: center; }
+.stat-value-editor { display: flex; align-items: center; gap: 5px; }
+.stat-value-editor button { width: 25px; height: 25px; border-radius: 50%; border: 1px solid #ccc; background-color: #f0f0f0; font-weight: bold; cursor: pointer;}
+.stat-value-editor span { font-weight: normal; }
+.stat-bonus { color: #28a745; font-weight: bold; margin-left: 4px; }
+.inventories-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+#save-changes-btn, .create-btn { background-color: #007bff; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 5px; cursor: pointer; width: 100%; }
+.create-btn { margin-top: 10px; }
+
+/* Inventory Lists */
+#inventory-list, #equipment-inventory-list { list-style: none; padding: 0; margin: 10px 0; max-height: 120px; overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 4px; }
+#inventory-list li { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; }
+.remove-item-btn { color: #dc3545; background: none; border: none; font-weight: bold; font-size: 18px; cursor: pointer; }
+#equipment-inventory-list li { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
+#equipment-inventory-list li:hover { background-color: #f0f2f5; }
+.equip-item-name { font-weight: bold; }
+.equip-item-details { font-size: 12px; color: #6c757d; }
+
+/* Form Tambah Item */
+.add-item-form { display: flex; gap: 10px; margin-top: 10px; }
+#add-item-btn { background-color: #28a745; color: white; border: none; border-radius: 5px; width: 40px; height: 40px; font-size: 20px; cursor: pointer; }
+
+/* Modal */
+.modal { position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; }
+.modal-content { background-color: #fefefe; padding: 25px; border-radius: 10px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+.close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+#create-equip-form label, #skill-modal-body label { display: block; margin-top: 10px; font-weight: bold; }
+#create-equip-form button, #confirm-learn-skill-btn { margin-top: 15px; width: 100%; padding: 10px; background-color: #007bff; color: white; border:none; border-radius: 4px; }
+.stat-input-group { display: flex; gap: 10px; margin-bottom: 5px; }
+#skill-tree-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.skill-node { padding: 5px 10px; background-color: #e9ecef; border-radius: 20px; cursor: pointer; }
+.skill-tree-header { display: flex; justify-content: space-between; align-items: center; }
+.learn-btn { background-color: #28a745; color: white; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 20px; cursor: pointer; line-height: 28px; }
+#skill-modal-body { max-height: 250px; overflow-y: auto; margin: 15px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+/* === TAMBAHKAN CSS INI DI AKHIR FILE === */
+
+/* Styling untuk Rarity di Inventory */
+.equip-item-name {
+    display: block; /* Agar rarity bisa di baris baru jika perlu */
+}
+
+.rarity-tag {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 8px;
+    color: white;
+    margin-left: 8px;
+}
+
+.rarity-common { background-color: #6c757d; }
+.rarity-rare { background-color: #007bff; }
+.rarity-epic { background-color: #6f42c1; }
+.rarity-legendary { background-color: #fd7e14; }
+
+/* Styling untuk Rarity di Slot Equipment */
+.equipment-slot {
+    border-left: 5px solid #ccc; /* Border default */
+}
+.slot-common { border-left-color: #6c757d; }
+.slot-rare { border-left-color: #007bff; }
+.slot-epic { border-left-color: #6f42c1; }
+.slot-legendary { border-left-color: #fd7e14; }
+/* === TAMBAHKAN ATAU GANTI CSS INI DI AKHIR FILE === */
+
+#equipment-inventory-list li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    /* Ubah menjadi flexbox untuk menata tombol hapus */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Mengelompokkan info item */
+.equip-item-info {
+    cursor: pointer;
+    flex-grow: 1; /* Membuat area info bisa diklik & mengambil sisa ruang */
+}
+
+.remove-equip-btn {
+    color: #dc3545;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0 5px;
+    border-radius: 50%;
+}
+
+.remove-equip-btn:hover {
+    background-color: #fbe0e3;
+}

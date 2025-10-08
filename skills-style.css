@@ -1,0 +1,57 @@
+/* General Body & Layout */
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f0f2f5; color: #333; transition: margin-left 0.3s; }
+main { padding: 20px; }
+.hidden { display: none !important; }
+
+/* Header & Navigation (No change) */
+.main-header { display: flex; align-items: center; background-color: #ffffff; padding: 10px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.menu-btn { background: none; border: none; font-size: 24px; cursor: pointer; margin-right: 15px; }
+.main-header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+.side-nav { height: 100%; width: 0; position: fixed; z-index: 10; top: 0; left: 0; background-color: #111; overflow-x: hidden; transition: 0.3s; padding-top: 60px; }
+.side-nav a { padding: 10px 15px; text-decoration: none; font-size: 18px; color: #818181; display: block; transition: 0.2s; }
+.side-nav a:hover, .side-nav a.active { color: #f1f1f1; }
+
+/* --- STYLING BARU UNTUK TABS --- */
+.tab-buttons { display: flex; border-bottom: 2px solid #ccc; margin-bottom: 20px; }
+.tab-btn { background-color: transparent; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-bottom: 3px solid transparent; }
+.tab-btn.active { color: #007bff; border-bottom-color: #007bff; }
+.tab-content { display: none; }
+.tab-content.active { display: grid; } /* Menggunakan grid dari style lama */
+
+/* Skill Container & Cards */
+.skill-container { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.add-btn { font-size: 50px; font-weight: lighter; cursor: pointer; border: 2px dashed #ccc; background-color: #fafafa; color: #ccc; border-radius: 10px; transition: all 0.3s ease; width: 100%; min-height: 150px; display: flex; align-items: center; justify-content: center; grid-column: 1 / -1; margin-top: 10px; }
+.add-btn:hover { background-color: #e9e9e9; }
+
+.skill-card { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; position: relative; border-left: 5px solid; }
+.skill-card[data-type="damage"] { border-color: #dc3545; }
+.skill-card[data-type="buff"] { border-color: #28a745; }
+.skill-card[data-type="debuff"] { border-color: #ffc107; }
+
+.skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.skill-header h3 { margin: 0; }
+.skill-tag { font-size: 12px; padding: 3px 8px; border-radius: 10px; color: white; }
+.skill-tag.aktif { background-color: #17a2b8; }
+.skill-tag.pasif { background-color: #6c757d; }
+
+.skill-card .effect-display { font-weight: bold; margin-bottom: 10px; font-size: 14px; }
+.skill-card p { margin: 0; font-size: 14px; color: #666; }
+.delete-btn { position: absolute; top: 5px; right: 5px; background-color: rgba(0,0,0,0.1); color: #333; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+
+/* --- STYLING BARU UNTUK MODAL & FORM --- */
+.modal { z-index: 100; /* ... (sisa style modal sama) */ }
+.modal-content { max-height: 90vh; overflow-y: auto; background-color: #fefefe; margin: auto; padding: 25px; border-radius: 10px; width: 90%; max-width: 550px; position: relative; }
+.close-btn { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+
+#skill-form .form-section { margin-bottom: 15px; }
+#skill-form label { display: block; font-weight: bold; margin-bottom: 5px; }
+#skill-form input[type="text"], #skill-form input[type="number"], #skill-form select, #skill-form textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+#skill-form button { width: 100%; background-color: #007bff; color: white; padding: 14px; margin-top: 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+
+.radio-group label { display: inline-block; font-weight: normal; margin-right: 15px; }
+.radio-group input { margin-right: 5px; }
+
+.options-wrapper { border: 1px solid #e0e0e0; padding: 15px; border-radius: 5px; margin-top: 10px; }
+.formula-group { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+.formula-group input { flex: 1; }
+.formula-group select { flex: 2; }

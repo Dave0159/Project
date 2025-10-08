@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Characters</title>
+    <link rel="stylesheet" href="player-stat-style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <button id="menu-btn" class="menu-btn">&#9776;</button>
+        <h1>My Characters</h1>
+    </header>
+
+    <nav id="side-nav" class="side-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="monster-sheet.html">Monster Sheets</a>
+        <a href="skills.html">Skills</a>
+        <a href="player-stat.html" class="active">Player Stat</a>
+    </nav>
+    
+    <main id="main-content">
+        <div id="player-container">
+            <button id="add-player-btn" class="add-btn">+</button>
+        </div>
+    </main>
+
+    <div id="player-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal-btn" class="close-btn">&times;</span>
+            <h3>Create New Character</h3>
+            <form id="player-form">
+                <label for="player-name">Nama Karakter:</label>
+                <input type="text" id="player-name" required>
+
+                <label for="player-image">Gambar Karakter (Opsional):</label>
+                <input type="file" id="player-image" accept="image/*">
+
+                <label for="player-level">Level Awal:</label>
+                <input type="number" id="player-level" min="1" value="1" required>
+
+                <label>Skill Set (Player):</label>
+                <div class="custom-select-wrapper">
+                    <div id="selected-skills-display"></div>
+                    <input type="text" id="skill-search-input" placeholder="Cari dan pilih skill player...">
+                    <div id="skills-dropdown" class="skills-checkbox-container hidden"></div>
+                </div>
+
+                <h4>Base Stats</h4>
+                <div class="stats-grid">
+                    <div><label for="player-str">STR:</label><input type="number" id="player-str" value="5"></div>
+                    <div><label for="player-agi">AGI:</label><input type="number" id="player-agi" value="5"></div>
+                    <div><label for="player-dex">DEX:</label><input type="number" id="player-dex" value="5"></div>
+                    <div><label for="player-def">DEF:</label><input type="number" id="player-def" value="5"></div>
+                    <div><label for="player-con">CON:</label><input type="number" id="player-con" value="5"></div>
+                    <div><label for="player-int">INT:</label><input type="number" id="player-int" value="5"></div>
+                </div>
+
+                <button type="submit">Save Character</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="player-stat.js"></script>
+</body>
+</html>

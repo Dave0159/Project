@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Project Dashboard</title>
+    <link rel="stylesheet" href="login-style.css"> <!-- Reusing login styles -->
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Create Account</h2>
+            <p>Join and start your journey.</p>
+            <form id="register-form">
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-login">Register</button>
+            </form>
+            <p id="error-message" class="error-message hidden"></p>
+            <p class="sub-text">Already have an account? <a href="login.html">Login here</a>.</p>
+        </div>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+</html>

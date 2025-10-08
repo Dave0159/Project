@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Creator</title>
+    <link rel="stylesheet" href="skills-style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <button id="menu-btn" class="menu-btn">
+            &#9776; </button>
+        <h1>My Skill Cards</h1>
+    </header>
+
+    <nav id="side-nav" class="side-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="monster-sheet.html">Monster Sheets</a>
+        <a href="skills.html" class="active">Skills</a>
+        <a href="player-stat.html">player stat</a>
+        <a href="calculator.html">Calculator</a>
+    </nav>
+    
+    <main id="main-content">
+        <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="player">Player Skills</button>
+            <button class="tab-btn" data-tab="monster">Monster Skills</button>
+        </div>
+
+        <div id="player-skills-container" class="skill-container tab-content active">
+            </div>
+        <div id="monster-skills-container" class="skill-container tab-content">
+            </div>
+
+        <button id="add-skill-btn" class="add-btn">+</button>
+    </main>
+
+    <div id="skill-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal-btn" class="close-btn">&times;</span>
+            <h3>Create New Skill</h3>
+            <form id="skill-form">
+                
+                <div class="form-section">
+                    <label for="skill-name">Nama Skill:</label>
+                    <input type="text" id="skill-name" required>
+                </div>
+
+                <div class="form-section radio-group">
+                    <label>Kategori:</label>
+                    <label><input type="radio" name="category" value="aktif" checked> Aktif</label>
+                    <label><input type="radio" name="category" value="pasif"> Pasif</label>
+                </div>
+
+                <div class="form-section">
+                    <label for="skill-type">Jenis Skill:</label>
+                    <select id="skill-type">
+                        <option value="damage">Damage</option>
+                        <option value="buff">Buff</option>
+                        <option value="debuff">Debuff</option>
+                    </select>
+                </div>
+
+                <div id="dynamic-options">
+                    
+                    <div id="damage-options" class="options-wrapper">
+                        <label>Damage Formula:</label>
+                        <div class="formula-group">
+                            <input type="number" id="damage-base" placeholder="Base Dmg">
+                            <span>+</span>
+                            <input type="number" id="damage-percent" placeholder="% Stat">
+                            <span>% of</span>
+                            <select id="damage-stat">
+                                <option value="str">STR</option> <option value="agi">AGI</option> <option value="dex">DEX</option>
+                                <option value="def">DEF</option> <option value="con">CON</option> <option value="int">INT</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="buff-options" class="options-wrapper hidden">
+                        <div class="radio-group">
+                            <label>Target:</label>
+                            <label><input type="radio" name="buff-target" value="self" checked> Diri Sendiri</label>
+                            <label><input type="radio" name="buff-target" value="teammate"> Rekan Tim</label>
+                        </div>
+                        <label>Efek Buff:</label>
+                        <select id="buff-effect-type">
+                            <option value="stat_increase">Peningkatan Stat (%)</option>
+                            <option value="hp_recovery">Pemulihan Darah (%)</option>
+                            <option value="debuff_removal">Penghilang Debuff</option>
+                        </select>
+                        <div id="buff-details" class="formula-group">
+                            </div>
+                    </div>
+
+                    <div id="debuff-options" class="options-wrapper hidden">
+                        <label>Efek Debuff:</label>
+                        <select id="debuff-effect-type">
+                            <option value="stat_reduction">Pengurangan Stat (%)</option>
+                            <option value="dot">Pengurangan Darah/detik (%)</option>
+                        </select>
+                         <div id="debuff-details" class="formula-group">
+                            </div>
+                    </div>
+
+                </div>
+
+                <div class="form-section">
+                    <label for="skill-desc">Deskripsi Skill:</label>
+                    <textarea id="skill-desc" rows="3" required></textarea>
+                </div>
+
+                <button type="submit">Save Skill</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="skills.js"></script>
+</body>
+</html>

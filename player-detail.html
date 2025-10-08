@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Details</title>
+    <link rel="stylesheet" href="player-detail-style.css">
+</head>
+<body>
+    <header class="main-header">
+        <a href="player-stat.html" class="back-btn">&larr; Back to Characters</a>
+        <h1 id="player-name-header">Character Name</h1>
+    </header>
+
+    <main class="detail-grid">
+        <section class="equipment-panel">
+            <div class="player-avatar">
+                <img id="player-image-preview" src="" alt="Player Avatar">
+                <label for="image-upload" class="upload-btn">Change Picture</label>
+                <input type="file" id="image-upload" accept="image/*">
+            </div>
+            <h2>Equipment</h2>
+            <div class="equipment-slot" data-slot="helmet"><span>Helmet</span></div>
+            <div class="equipment-slot" data-slot="shoulder"><span>Shoulder Pad</span></div>
+            <div class="equipment-slot" data-slot="armor"><span>Armor</span></div>
+            <div class="equipment-slot" data-slot="weapon"><span>Weapon</span></div>
+            <div class="equipment-slot" data-slot="leggings"><span>Leggings</span></div>
+            <div class="equipment-slot" data-slot="shoes"><span>Shoes</span></div>
+        </section>
+
+        <section class="info-panel">
+            <div class="top-info">
+                <div class="description-box">
+                    <h3>Description</h3>
+                    <textarea id="player-description" rows="3"></textarea>
+                </div>
+                <div class="level-stats-box">
+                    <div class="level-selector">
+                        <label for="player-level">Level</label>
+                        <input type="number" id="player-level" min="1" max="100">
+                    </div>
+                    <div id="stats-container" class="stats-grid"></div>
+                </div>
+            </div>
+
+            <div class="bottom-info">
+                <div class="skill-tree">
+                     <div class="skill-tree-header">
+                        <h3>Skill Tree</h3>
+                        <button id="learn-skill-btn" class="learn-btn">+</button>
+                    </div>
+                    <div id="skill-tree-container"></div>
+                </div>
+                <div class="inventories-wrapper">
+                    <div class="inventory">
+                        <h3>Equipment Inventory</h3>
+                        <ul id="equipment-inventory-list"></ul>
+                        <button id="create-equip-btn" class="create-btn">Create Equipment</button>
+                    </div>
+                    <div class="inventory">
+                        <h3>Item Inventory</h3>
+                        <div class="gold-manager">
+                            <label for="player-gold">Gold:</label>
+                            <input type="number" id="player-gold" min="0">
+                        </div>
+                        <ul id="inventory-list"></ul>
+                        <div class="add-item-form">
+                            <input type="text" id="new-item-input" placeholder="Nama item...">
+                            <button id="add-item-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="save-changes-btn">Save All Changes</button>
+        </section>
+    </main>
+
+    <div id="create-equip-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-equip-modal" class="close-btn">&times;</span>
+            <h3>Create New Equipment</h3>
+            <form id="create-equip-form">
+                <label for="equip-name">Nama Equipment:</label>
+                <input type="text" id="equip-name" required>
+
+                <label for="equip-type">Jenis Equipment:</label>
+                <select id="equip-type">
+                    <option value="helmet">Helmet</option>
+                    <option value="shoulder">Shoulder Pad</option>
+                    <option value="armor">Armor</option>
+                    <option value="weapon">Weapon</option>
+                    <option value="leggings">Leggings</option>
+                    <option value="shoes">Shoes</option>
+                </select>
+
+                <label for="equip-rarity">Rarity:</label>
+                <select id="equip-rarity">
+                    <option value="common">Common</option>
+                    <option value="rare">Rare</option>
+                    <option value="epic">Epic</option>
+                    <option value="legendary">Legendary</option>
+                </select>
+                
+                <h4>Stats</h4>
+                <div id="equip-stats-container"></div>
+                <button type="button" id="add-stat-btn">Add Stat</button>
+
+                <label for="equip-passive">Skill Pasif/Wajib (Opsional):</label>
+                <textarea id="equip-passive" rows="2"></textarea>
+                
+                <button type="submit">Save Equipment</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="skill-modal" class="modal hidden">
+         <div class="modal-content">
+            <span id="close-skill-modal" class="close-btn">&times;</span>
+            <h3 id="skill-modal-title"></h3>
+            <div id="skill-modal-body"></div>
+            <button id="confirm-learn-skill-btn" class="hidden">Confirm</button>
+        </div>
+    </div>
+
+    <script src="player-detail.js"></script>
+</body>
+</html>

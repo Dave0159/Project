@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <button id="menu-btn" class="menu-btn">
+            &#9776; </button>
+        <h1>Hello, user!</h1>
+    </header>
+
+    <nav id="side-nav" class="side-nav">
+        <a href="index.html" class="active">Dashboard</a>
+        <a href="monster-sheet.html">Monster Sheets</a>
+        <a href="skills.html">Skills</a>
+        <a href="player-stat.html">Player Stat</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="#" id="logout-btn">Logout</a>
+    </nav>
+
+    <main id="main-content">
+        <div class="dashboard-grid">
+            
+            <div class="card">
+                <h3>Monster Power Ranking</h3>
+                <div class="chart-container">
+                    <canvas id="powerRankingChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Monster Stat Distribution (Non-HP/MP)</h3>
+                <div class="chart-container">
+                    <canvas id="statDistributionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+    <h3>Equipment Drop Rate</h3>
+    <div class="chart-container">
+        <canvas id="dropRateChart"></canvas>
+    </div>
+</div>
+
+            <div class="card">
+                <h3>Player Power Levels</h3>
+                <div id="player-power-container" class="chart-container">
+                    <canvas id="playerPowerChart"></canvas>
+                    <p id="no-player-message" class="hidden" style="text-align: center; color: #888; margin-top: 20%;">No players created yet.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+        // Tambahkan event listener untuk logout di setiap halaman
+        document.getElementById('logout-btn').addEventListener('click', logout);
+    </script>
+</body>
+</html>

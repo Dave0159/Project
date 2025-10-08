@@ -1,0 +1,144 @@
+/* General Body & Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+    transition: margin-left 0.3s;
+}
+
+main {
+    padding: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* --- Header & Navigation --- */
+.main-header {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.side-nav {
+    height: 100%;
+    width: 0; /* Initially hidden */
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+}
+
+.side-nav a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    transition: 0.2s;
+}
+
+.side-nav a:hover, .side-nav a.active {
+    color: #f1f1f1;
+}
+
+/* --- Dashboard Grid & Cards --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    padding: 20px;
+}
+
+.card h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+
+
+/* --- Most Powerful Monster Widget --- */
+#powerful-monster-widget {
+    text-align: center;
+    padding-top: 20px;
+}
+
+#powerful-monster-widget .img-placeholder {
+    width: 120px;
+    height: 120px;
+    background-color: #e9ecef;
+    color: #adb5bd;
+    font-size: 50px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+}
+
+#powerful-monster-widget p {
+    font-size: 16px;
+    color: #6c757d;
+    margin: 0 0 5px 0;
+}
+
+#powerful-monster-widget span {
+    font-size: 14px;
+    color: #adb5bd;
+    font-weight: bold;
+}
+
+#powerful-monster-info img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #007bff;
+}
+
+#powerful-monster-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+}
+
+#powerful-monster-power {
+    font-weight: bold;
+    color: #007bff !important;
+}

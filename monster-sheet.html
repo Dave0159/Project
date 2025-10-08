@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Sheets</title>
+    <link rel="stylesheet" href="monster-sheet-style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <button id="menu-btn" class="menu-btn">&#9776;</button>
+        <h1>My Monster Sheets</h1>
+    </header>
+
+     <nav id="side-nav" class="side-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="monster-sheet.html" class="active">Monster Sheets</a>
+        <a href="skills.html">Skills</a>
+        <a href="player-stat.html">Player Stat</a>
+        <a href="calculator.html">Calculator</a>
+    </nav>
+    
+    <main id="main-content">
+        <div id="monster-container">
+            <button id="add-monster-btn" class="add-btn">+</button>
+        </div>
+    </main>
+
+    <div id="monster-create-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-create-modal-btn" class="close-btn">&times;</span>
+            <h3>Add New Monster</h3>
+            <form id="create-monster-form">
+                <label for="monster-name">Nama Monster:</label>
+                <input type="text" id="monster-name" required>
+                <label for="monster-image">Gambar Monster:</label>
+                <input type="file" id="monster-image" accept="image/*" required>
+                <h4>Base Stats</h4>
+                <div class="stats-grid">
+                    <div><label for="monster-hp">HP:</label><input type="number" id="monster-hp" value="100"></div>
+                    <div><label for="monster-mana">Mana:</label><input type="number" id="monster-mana" value="50"></div>
+                    <div><label for="monster-str">STR:</label><input type="number" id="monster-str" value="10"></div>
+                    <div><label for="monster-agi">AGI:</label><input type="number" id="monster-agi" value="10"></div>
+                    <div><label for="monster-dex">DEX:</label><input type="number" id="monster-dex" value="10"></div>
+                    <div><label for="monster-def">DEF:</label><input type="number" id="monster-def" value="10"></div>
+                    <div><label for="monster-con">CON:</label><input type="number" id="monster-con" value="10"></div>
+                    <div><label for="monster-int">INT:</label><input type="number" id="monster-int" value="10"></div>
+                </div>
+                <button type="submit">Create Monster</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="monster-detail-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-detail-modal-btn" class="close-btn">&times;</span>
+            <h3 id="detail-monster-name"></h3>
+            <div class="detail-layout">
+                <div class="detail-left">
+                    <img id="detail-monster-image" src="" alt="Monster Image">
+                    <label for="detail-image-upload" class="upload-btn">Change Picture</label>
+                    <input type="file" id="detail-image-upload" accept="image/*">
+                </div>
+                <div class="detail-right">
+                    <h4>Stats</h4>
+                    <div id="detail-stats-grid" class="stats-grid"></div>
+                </div>
+            </div>
+            <div class="detail-skills">
+                <div class="skill-tree-header">
+                    <h4>Skills</h4>
+                    <button id="add-skill-btn" class="learn-btn">+</button>
+                </div>
+                <div id="detail-skills-container"></div>
+            </div>
+            <button id="save-monster-changes-btn">Save Changes</button>
+        </div>
+    </div>
+
+    <div id="skill-modal" class="modal hidden">
+         <div class="modal-content">
+            <span id="close-skill-modal" class="close-btn">&times;</span>
+            <h3 id="skill-modal-title"></h3>
+            <div id="skill-modal-body"></div>
+            <button id="confirm-skill-btn" class="hidden">Confirm</button>
+       </div>
+   </div>
+
+    <script src="monster-sheet.js"></script>
+</body>
+</html>
